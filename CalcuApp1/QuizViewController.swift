@@ -67,12 +67,12 @@ class QuizViewController: UIViewController {
         let num = Int(answerNum)
         resultLine = sp + judgment + sp +
                     "[" + timeWk + "]" +
-                    "(" + String(format: "%4d",num!) + ")" +
+                    "(" + String(format: "%3d",num!) + ")" +
                      sp + leftNum.text! +
-                     sp + calculationIndex +
-                     sp + rightNum.text! +
-                     sp + "=" +
-                     sp + showLabel.text!
+                     calculationIndex +
+                     rightNum.text! +
+                     "=" +
+                     showLabel.text!
 
         // result へ追加する
         result.append(resultLine)
@@ -125,10 +125,17 @@ class QuizViewController: UIViewController {
         guard let sendereNum = sender.titleLabel?.text else {
             return
         }
+        // 先頭が０の場合
         showLabel.text = showNum + sendereNum
-        let showLabelChk = showLabel.text!
+        var showLabelChk = showLabel.text!
+        let cnt = showLabelChk.count
+        if ( cnt == 2) && ( showLabelChk.prefix(1) == "0") {
+            showLabel.text = String(showLabelChk.suffix(showLabelChk.count - 1))
+            showLabelChk = showLabel.text!
+        }
+        // ９９９までの回答とする
         let showLabelInt:Int = Int(showLabelChk)!
-        if showLabelInt > 999 {
+        if showLabelInt > 1000 {
             var showLabelx:String
             var showLabelxx:String
             if showLabel.text != "" {
